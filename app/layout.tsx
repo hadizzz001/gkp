@@ -1,5 +1,4 @@
-"use client"
-import {  Footer,Navbar2 } from '../components'
+"use client" 
 import './globals.css'
 import './custom.css'
 import './bootstrap.min.css'
@@ -7,9 +6,10 @@ import './bs-select.css'
 import './slick.css' 
 import { CartProvider } from './context/CartContext';
 import { BooleanProvider } from './context/CartBoolContext'; 
-import GifLoader from '../components/GifLoader'
-import Offer from '../components/Offer'
+import GifLoader from '../components/GifLoader' 
 import WhatsAppIcon from '../components/WhatsAppIcon';   
+import Footer from '../components/Footer';   
+import Navbar2 from '../components/Navbar2';   
 import { GoogleAnalytics } from '@next/third-parties/google' 
 
 

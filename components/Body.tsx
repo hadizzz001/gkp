@@ -1,15 +1,6 @@
 // "use client";  
-import { useState, useEffect, useRef } from "react";
-import Catslider from './Catslider';
-import ProductTop from './ProductTop';
-import ProductTop1 from './ProductTop1';
-import Shop from './Shop';
-import ReviewsSwiper from './ReviewsSwiper';
-import Rate from './Rate';
-import Offer from './Offer';
-import Box from './Box';
-import Carousel from './Carousel';
-import Carousel1 from './Carousel1';
+import { useState, useEffect, useRef } from "react"; 
+import Carousel from './Carousel'; 
 import About from './About';
 import About1 from './About1';
 import Mission from './Mission';
