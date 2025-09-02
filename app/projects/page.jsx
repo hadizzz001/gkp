@@ -13,7 +13,7 @@ export default function Gallery() {
         const data = await res.json();
 
         // Take only the first 3 items
-        const galleryImages = data.slice(0, 3).map(item => ({
+        const galleryImages = data.map(item => ({
           src: item.img[0], // get the first image
           title: item.title,
         }));
@@ -50,21 +50,7 @@ export default function Gallery() {
         ))}
       </section>
 
-      <div
-        className="mb-5 mt-5"
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <button
-          id="mybbtn2"
-          onClick={() => router.push("/projects")}
-        >
-          More projects
-        </button>
-      </div>
+    
     </>
   );
 }

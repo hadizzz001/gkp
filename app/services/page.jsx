@@ -22,7 +22,7 @@ useEffect(() => {
     try {
       const res = await fetch("/api/services");
       const data = await res.json();
-      setServices(data.slice(0, 4)); // <-- only first 4 items
+      setServices(data); // <-- only first 4 items
     } catch (error) {
       console.error("Failed to fetch services:", error);
     }
@@ -101,14 +101,7 @@ useEffect(() => {
         })}
       </section>
 
-      <div
-        className="mb-5 mt-5"
-        style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
-      >
-        <button id="mybbtn2" onClick={() => router.push("/services")}>
-          More services
-        </button>
-      </div>
+ 
     </>
   );
 }

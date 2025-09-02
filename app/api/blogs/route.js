@@ -7,7 +7,7 @@ export async function GET() {
   try {
     const client = await clientPromise; // Connect to MongoDB
     const db = client.db('test'); // Replace with your database name
-    const collection = db.collection('Product'); // Replace with your collection name
+    const collection = db.collection('Blog'); // Replace with your collection name
 
     // Exclude documents where category is "Pool Trays"
     const data = await collection

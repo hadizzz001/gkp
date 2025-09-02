@@ -1,10 +1,36 @@
-"use client";
+'use client';
 
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function Home() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const searchId = searchParams.get('id');
 
+  const [blog, setBlog] = useState(null);
+
+  useEffect(() => {
+    if (!searchId) return;
+
+    const fetchBlog = async () => {
+      try {
+        const res = await fetch(`/api/blogs/${searchId}`);
+        const data = await res.json();
+        if (data && data.length > 0) {
+          setBlog(data[0]); // take first result
+        }
+      } catch (error) {
+        console.error('Failed to fetch blog:', error);
+      }
+    };
+
+    fetchBlog();
+  }, [searchId]);
+
+  if (!blog) {
+    return <p style={{ textAlign: 'center', marginTop: '50px' }}>Loading...</p>;
+  }
 
   return (
     <>
@@ -43,14 +69,13 @@ export default function Home() {
           >
             <div
               style={{
-                backgroundImage:
-                  "url('https://res.cloudinary.com/dnprilij7/image/upload/v1756635661/1-slider-1-scaled_vjvcgh.webp')",
+                backgroundImage: `url(${blog.img[0]})`,
                 backgroundAttachment: "fixed",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
                 backgroundSize: "cover",
                 width: "100%",
-                minHeight: "700px", // smaller for mobile
+                minHeight: "700px",
               }}
             ></div>
           </div>
@@ -63,20 +88,12 @@ export default function Home() {
             }}
             className="content-text"
           >
-            <h1 className="mynewpara">About us</h1>
-            <p className="mynewpara1 mb-5 mt-5">
-              GKP is a leading company established in the United Arab Emirates
-              during the year 2018 and in Saudi Arabia during 2024.
-              Specializing in construction, fit-out, and contracting, with a diverse
-              portfolio of services that include civil engineering, electro-mechanical
-              engineering, furniture solutions, landscaping, and hardscaping.
-              With a legacy of excellence and a commitment to innovation, we deliver
-              customized solutions that meet the highest standards of quality and
-              efficiency.
-            </p>
-            <button id="mybbtn2" onClick={() => router.push("/about")}>
-              Learn more
-            </button>
+            <h1 className="mynewpara">{blog.title}</h1>
+            <p
+              className="mynewpara1 mb-5 mt-5"
+              dangerouslySetInnerHTML={{ __html: blog.description }}
+            ></p>
+        
           </div>
         </div>
       </section>
@@ -96,7 +113,7 @@ export default function Home() {
           }
           .content-image {
             order: 1;
-            min-height: 300px; /* smaller image on mobile */
+            min-height: 300px;
           }
         }
       `}</style>

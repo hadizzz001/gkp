@@ -13,7 +13,7 @@ export async function GET(request, { params }) {
   try {
     const client = await clientPromise; // Connect to MongoDB
     const db = client.db('test'); // Replace with your database name
-    const collection = db.collection('Product'); // Replace with your collection name
+    const collection = db.collection('Blog'); // Replace with your collection name
 
     // Convert id to ObjectId and query the document
     const data = await collection.find({ _id: new ObjectId(id) }).toArray(); 
