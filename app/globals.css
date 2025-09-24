@@ -1659,7 +1659,7 @@
 
 
  nav a {
-   font-size: 12px !important;
+   font-size: 17px !important;
    white-space: nowrap !important;
  }
 
@@ -1820,6 +1820,14 @@
    font-family: "Poppins", sans-serif !important;
    font-weight: 300 !important;
  }
+ .mynewpara1c {
+   line-height: 1.7em !important;
+   text-align: center !important;
+   font-size: 16px !important;
+   color: #1e1e1e !important;
+   font-family: "Poppins", sans-serif !important;
+   font-weight: 300 !important;
+ }
  .mynewpara2 {
 line-height: 1.41em !important;
     text-align: center !important;
@@ -1904,10 +1912,15 @@ line-height: 1.41em !important;
 .myfp{
   color: #dbdbdb !important;
   font-weight: 500 !important;
-  font-size: 14px !important;
+  font-size: 19px !important;
 }
 .colorp{
   color: #dbdbdb !important;
   font-weight: 300 !important;
-  font-size: 12px !important;
+  font-size: 16px !important;
+}
+
+
+.form-control{
+  border: 1px solid #c2c2c2 !important; 
 }

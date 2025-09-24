@@ -1,13 +1,15 @@
 'use client';
-
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useLanguage } from "../context/LanguageContext";
 
 export default function Gallery() {
   const router = useRouter();
+  const { language } = useLanguage();
   const [columns, setColumns] = useState("repeat(4, 1fr)");
   const [services, setServices] = useState([]);
 
+  // Responsive columns
   useEffect(() => {
     const handleResize = () => {
       setColumns(window.innerWidth < 768 ? "1fr" : "repeat(4, 1fr)");
@@ -17,31 +19,62 @@ export default function Gallery() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-useEffect(() => {
-  const fetchServices = async () => {
-    try {
-      const res = await fetch("/api/services");
-      const data = await res.json();
-      setServices(data); // <-- only first 4 items
-    } catch (error) {
-      console.error("Failed to fetch services:", error);
-    }
-  };
-  fetchServices();
-}, []);
+  // Fetch and translate services
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const res = await fetch("/api/services");
+        const data = await res.json();
 
+        // Translate title and description for each service
+        const translatedServices = await Promise.all(
+          data.map(async (service) => {
+            let translatedTitle = service.title;
+            let translatedDescription = service.description;
 
-  const images = [
-    "https://res.cloudinary.com/dnprilij7/image/upload/v1756572733/74f558_b261ab6879d14b0bbc9800ec41ba91fd_mv2_d_6208_4258_s_4_2_hpgucz.avif",
-    "https://res.cloudinary.com/dnprilij7/image/upload/v1756628393/74f558_d26f60b4ce744d9c9e82426a09cd84b5_mv2_d_5616_3744_s_4_2_qfvjpy.avif",
-    "https://res.cloudinary.com/dnprilij7/image/upload/v1756628393/74f558_ac023650dfaf4026972886b8c33e06e9_mv2_d_4000_2983_s_4_2_b6yv1p.avif",
-    "https://res.cloudinary.com/dnprilij7/image/upload/v1756628516/Construction_civil_engineer_technician_and_architect_working_o82ryr.webp"
-  ];
+            try {
+              // Translate title
+              const titleRes = await fetch("/api/translate", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ targetLanguage: language, text: service.title }),
+              });
+              const titleData = await titleRes.json();
+              translatedTitle = titleData.translatedText || service.title;
+
+              // Translate description
+              const descRes = await fetch("/api/translate", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ targetLanguage: language, text: service.description }),
+              });
+              const descData = await descRes.json();
+              translatedDescription = descData.translatedText || service.description;
+            } catch (err) {
+              console.error("Translation failed for service:", service.title, err);
+            }
+
+            return {
+              ...service,
+              title: translatedTitle,
+              description: translatedDescription,
+            };
+          })
+        );
+
+        setServices(translatedServices);
+      } catch (error) {
+        console.error("Failed to fetch services:", error);
+      }
+    };
+
+    fetchServices();
+  }, [language]);
 
   return (
     <>
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-        <h1 className="mynewpara mt-10">Our services</h1>
+        <h1 className="mynewpara mt-10">{language === "ar" ? "خدماتنا" : "Our services"}</h1>
       </div>
 
       <section
@@ -54,9 +87,8 @@ useEffect(() => {
         }}
       >
         {services.map((service, index) => {
-          // Determine which row this service belongs to (2 services per row)
           const row = Math.floor(index / 2);
-          const isEvenRow = row % 2 === 1; // swap for 2nd row, 4th row...
+          const isEvenRow = row % 2 === 1;
 
           const imageCell = (
             <div key={`img-${index}`} style={{ aspectRatio: "1 / 1", overflow: "hidden" }}>
@@ -80,13 +112,13 @@ useEffect(() => {
                 background: "#dbdbdb",
                 padding: "1rem",
               }}
+              dir={language === "ar" ? "rtl" : "ltr"}
             >
               <p className="mynewpara2">{service.title}</p>
               <p className="mynewpara3">{service.description}</p>
             </div>
           );
 
-          // Swap order for even rows
           return isEvenRow ? (
             <>
               {textCell}
@@ -100,8 +132,6 @@ useEffect(() => {
           );
         })}
       </section>
-
- 
     </>
   );
 }

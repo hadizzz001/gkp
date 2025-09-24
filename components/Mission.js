@@ -1,12 +1,54 @@
 "use client";
+
 import { useState, useEffect } from "react";
+import { useLanguage } from "../app/context/LanguageContext"; // ✅ Import language context
 
 export default function Home() {
+  const { language } = useLanguage(); // ✅ Get current language
   const [isMobile, setIsMobile] = useState(false);
+  const [translatedContent, setTranslatedContent] = useState({
+    missionTitle: "Mission",
+    missionText:
+      "To deliver world class construction that exceeds client expectations through innovation, precision, and quality.",
+  });
 
+  // ✅ Handle translation
+  useEffect(() => {
+    const translateContent = async () => {
+      const contentToTranslate = {
+        missionTitle: "Mission",
+        missionText:
+          "To deliver world class construction that exceeds client expectations through innovation, precision, and quality.",
+      };
+
+      try {
+        const translated = await Promise.all(
+          Object.entries(contentToTranslate).map(async ([key, text]) => {
+            const res = await fetch("/api/translate", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ targetLanguage: language, text }),
+            });
+
+            const data = await res.json();
+            return [key, data.translatedText || text];
+          })
+        );
+
+        setTranslatedContent(Object.fromEntries(translated));
+      } catch (err) {
+        console.error("Translation failed", err);
+        setTranslatedContent(contentToTranslate); // fallback
+      }
+    };
+
+    translateContent();
+  }, [language]);
+
+  // ✅ Handle responsive layout
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
-    handleResize(); // check on mount
+    handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -39,19 +81,31 @@ export default function Home() {
             marginBottom: isMobile ? "20px" : "0",
           }}
         >
-          <h1 className="myTitle5" style={{ textAlign: isMobile ? "center" : "left", color: "#fff" }}>
-            Mission
+          <h1
+            className="myTitle5"
+            style={{
+              textAlign: isMobile ? "center" : "left",
+              color: "#fff",
+            }}
+          >
+            {translatedContent.missionTitle}
           </h1>
         </div>
 
         {/* Vertical Line */}
         {!isMobile && (
-          <div style={{ width: "2px", backgroundColor: "#dbdbdb", height: "100%" }}></div>
+          <div
+            style={{
+              width: "2px",
+              backgroundColor: "#dbdbdb",
+              height: "100%",
+            }}
+          ></div>
         )}
 
         {/* Right Text */}
         <div
-        className="myTitle6"
+          className="myTitle6"
           style={{
             width: isMobile ? "100%" : "70%",
             marginLeft: isMobile ? "0" : "20px",
@@ -59,9 +113,8 @@ export default function Home() {
             color: "#fff",
           }}
         >
-          <p>
-            To deliver world class construction that exceeds client expectations
-            through innovation, precision, and quality.
+          <p dir={language === "ar" ? "rtl" : "ltr"}>
+            {translatedContent.missionText}
           </p>
         </div>
       </div>

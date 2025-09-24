@@ -12,7 +12,7 @@ import Footer from '../components/Footer';
 import Navbar2 from '../components/Navbar2';   
 import { GoogleAnalytics } from '@next/third-parties/google' 
 
-
+import { LanguageProvider } from '../app/context/LanguageContext';
 
 
  
@@ -132,7 +132,7 @@ export default function RootLayout({
 
       <body>  
       <GifLoader /> 
-        
+        <LanguageProvider>
         <BooleanProvider>
         <CartProvider>
           <Navbar2 />
@@ -144,6 +144,7 @@ export default function RootLayout({
           <Footer />
         </CartProvider>
         </BooleanProvider> 
+        </LanguageProvider>
       </body>
     </html>
   )

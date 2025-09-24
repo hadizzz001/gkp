@@ -1,10 +1,63 @@
-"use client";
+"use client"; 
 
 import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useLanguage } from "../app/context/LanguageContext"; // Import your language context
 
 export default function Home() {
   const router = useRouter();
+  const { language } = useLanguage(); // Get current language
+  const [translatedContent, setTranslatedContent] = useState({
+    aboutUs: "About us",
+    description: `GKP is a leading company established in the United Arab Emirates
+    during the year 2018 and in Saudi Arabia during 2024.
+    Specializing in construction, fit-out, and contracting, with a diverse
+    portfolio of services that include civil engineering, electro-mechanical
+    engineering, furniture solutions, landscaping, and hardscaping.
+    With a legacy of excellence and a commitment to innovation, we deliver
+    customized solutions that meet the highest standards of quality and
+    efficiency.`,
+    learnMore: "Learn more",
+  });
 
+  useEffect(() => {
+    const translateContent = async () => {
+      const contentToTranslate = {
+        aboutUs: "About us",
+        description: `GKP is a leading company established in the United Arab Emirates
+        during the year 2018 and in Saudi Arabia during 2024.
+        Specializing in construction, fit-out, and contracting, with a diverse
+        portfolio of services that include civil engineering, electro-mechanical
+        engineering, furniture solutions, landscaping, and hardscaping.
+        With a legacy of excellence and a commitment to innovation, we deliver
+        customized solutions that meet the highest standards of quality and
+        efficiency.`,
+        learnMore: "Learn more",
+      };
+
+      try {
+        const translated = await Promise.all(
+          Object.entries(contentToTranslate).map(async ([key, text]) => {
+            const res = await fetch("/api/translate", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ targetLanguage: language, text }),
+            });
+
+            const data = await res.json();
+            return [key, data.translatedText || text];
+          })
+        );
+
+        setTranslatedContent(Object.fromEntries(translated));
+      } catch (err) {
+        console.error("Translation failed", err);
+        setTranslatedContent(contentToTranslate); // fallback
+      }
+    };
+
+    translateContent();
+  }, [language]);
 
   return (
     <>
@@ -44,13 +97,13 @@ export default function Home() {
             <div
               style={{
                 backgroundImage:
-                  "url('https://res.cloudinary.com/dnprilij7/image/upload/v1756635661/1-slider-1-scaled_vjvcgh.webp')",
-                backgroundAttachment: "fixed",
+                  "url('https://res.cloudinary.com/dnprilij7/image/upload/v1758632900/alpha-rebar-1_r9shyg.webp')",
+                backgroundAttachment: "inherit",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
                 backgroundSize: "cover",
                 width: "100%",
-                minHeight: "700px", // smaller for mobile
+                minHeight: "600px",
               }}
             ></div>
           </div>
@@ -63,19 +116,12 @@ export default function Home() {
             }}
             className="content-text"
           >
-            <h1 className="mynewpara">About us</h1>
-            <p className="mynewpara1 mb-5 mt-5">
-              GKP is a leading company established in the United Arab Emirates
-              during the year 2018 and in Saudi Arabia during 2024.
-              Specializing in construction, fit-out, and contracting, with a diverse
-              portfolio of services that include civil engineering, electro-mechanical
-              engineering, furniture solutions, landscaping, and hardscaping.
-              With a legacy of excellence and a commitment to innovation, we deliver
-              customized solutions that meet the highest standards of quality and
-              efficiency.
-            </p>
+            <h1 className="mynewpara">{translatedContent.aboutUs}</h1>
+           <p className="mynewpara1 mb-5 mt-5" dir={language === "ar" ? "rtl" : "ltr"}>
+  {translatedContent.description}
+</p>
             <button id="mybbtn2" onClick={() => router.push("/about")}>
-              Learn more
+              {translatedContent.learnMore}
             </button>
           </div>
         </div>
@@ -84,7 +130,7 @@ export default function Home() {
       <style>{`
         @media (max-width: 768px) {
           .content-container {
-            flex-direction: column; /* stack columns */
+            flex-direction: column;
           }
           .content-text, .content-image {
             width: 100% !important;
@@ -96,7 +142,7 @@ export default function Home() {
           }
           .content-image {
             order: 1;
-            min-height: 300px; /* smaller image on mobile */
+            min-height: 300px;
           }
         }
       `}</style>

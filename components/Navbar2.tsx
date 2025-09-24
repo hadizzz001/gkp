@@ -1,13 +1,54 @@
 'use client';
 
-import { useState } from 'react';
-import {
-  Menu,
-  X,
-} from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Menu, X } from 'lucide-react';
+import { useLanguage } from "../app/context/LanguageContext";
+import LanguageDropdown from "./LanguageDropdown";
+
+const originalLabels = {
+  home: "Home Page",
+  about: "About Us",
+  projects: "Projects",
+  services: "Services",
+  blogs: "Blogs",
+  contact: "Contact Us",
+};
 
 export default function NavBar() {
+  const { language } = useLanguage();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [labels, setLabels] = useState(originalLabels);
+
+  useEffect(() => {
+    const fetchTranslations = async () => {
+      if (language === "en") {
+        setLabels(originalLabels);
+        return;
+      }
+
+      try {
+        const entries = await Promise.all(
+          Object.entries(originalLabels).map(async ([key, text]) => {
+            const res = await fetch("/api/translate", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ targetLanguage: language, text }),
+            });
+
+            const data = await res.json();
+            return [key, data.translatedText || text];
+          })
+        );
+
+        setLabels(Object.fromEntries(entries));
+      } catch (err) {
+        console.error("Translation failed", err);
+        setLabels(originalLabels);
+      }
+    };
+
+    fetchTranslations();
+  }, [language]);
 
   return (
     <>
@@ -18,7 +59,7 @@ export default function NavBar() {
         }}
       >
         <div className="px-4 flex items-center text-black relative mynavidhere">
-          {/* Hamburger - only on mobile, left */}
+          {/* Hamburger - only on mobile */}
           <button
             id="mobile-menu-btn"
             onClick={() => setMenuOpen(true)}
@@ -28,7 +69,7 @@ export default function NavBar() {
             <Menu className="w-6 h-6 stroke-[1]" id="myColorblack" />
           </button>
 
-          {/* Logo - center on mobile, left on desktop */}
+          {/* Logo */}
           <div className="absolute left-1/2 -translate-x-1/2 sm:static sm:translate-x-0 flex justify-center sm:justify-start items-center flex-1 sm:flex-none">
             <a href="/">
               <img
@@ -40,37 +81,41 @@ export default function NavBar() {
             </a>
           </div>
 
-          {/* Desktop menu - pushed to the right on PC */}
+          {/* Desktop menu */}
           <nav
             className="hidden sm:flex flex-1 justify-end items-center gap-10"
             id="mynewNavNav"
           >
-            <a href="/" className="hover:underline">Home</a>
-            <a href="/about" className="hover:underline">About</a>
-            <a href="/projects" className="hover:underline">Projects</a>
-            <a href="/services" className="hover:underline">Services</a>
-            <a href="/blogs" className="hover:underline">Blogs</a>
-            <a href="/contact" className="hover:underline">Contact Us</a>
+            <a href="/">{labels.home}</a>
+            <a href="/about">{labels.about}</a>
+            <a href="/projects">{labels.projects}</a>
+            <a href="/services">{labels.services}</a>
+            <a href="/blogs">{labels.blogs}</a>
+            <a href="/contact">{labels.contact}</a>
+            {/* Language Selector */}
+            <LanguageDropdown />
           </nav>
         </div>
 
-        {/* Fullscreen Menu - only on mobile */}
+        {/* Sidebar Menu - only on mobile */}
         {menuOpen && (
-          <div className="fixed inset-0 bg-[#f5f5f5] text-black flex flex-col items-center justify-center z-50 sm:hidden">
+          <div className="fixed top-0 left-0 h-full w-64 bg-[#f5f5f5] text-black shadow-lg z-50 sm:hidden flex flex-col">
             <button
               onClick={() => setMenuOpen(false)}
-              className="absolute top-10 right-4"
+              className="absolute top-4 right-4"
               aria-label="Close menu"
             >
-              <X className="w-8 h-8 stroke-[1]" id="myColorblack" />
+              <X className="w-7 h-7 stroke-[1]" id="myColorblack" />
             </button>
-            <nav className="flex flex-col items-center gap-6 mt-12 text-3xl font-bold">
-              <a href="/" onClick={() => setMenuOpen(false)}>Home</a>
-              <a href="/about" onClick={() => setMenuOpen(false)}>About</a>
-              <a href="/services" onClick={() => setMenuOpen(false)}>Services</a>
-              <a href="/projects" onClick={() => setMenuOpen(false)}>Projects</a>
-              <a href="/blogs" onClick={() => setMenuOpen(false)}>Blogs</a>
-              <a href="/contact" onClick={() => setMenuOpen(false)}>Contact Us</a>
+            <nav className="flex flex-col mt-16 space-y-6 px-6 text-lg">
+              <a href="/" onClick={() => setMenuOpen(false)}>{labels.home}</a>
+              <a href="/about" onClick={() => setMenuOpen(false)}>{labels.about}</a>
+              <a href="/services" onClick={() => setMenuOpen(false)}>{labels.services}</a>
+              <a href="/projects" onClick={() => setMenuOpen(false)}>{labels.projects}</a>
+              <a href="/blogs" onClick={() => setMenuOpen(false)}>{labels.blogs}</a>
+              <a href="/contact" onClick={() => setMenuOpen(false)}>{labels.contact}</a>
+              {/* Language Selector in mobile */}
+              <LanguageDropdown />
             </nav>
           </div>
         )}

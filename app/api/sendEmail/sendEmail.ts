@@ -15,7 +15,7 @@ export const sendEmail = async (formData: FormData) => {
     if (firstname != null) {
         resend.emails.send({
             from: "noreply@ovoxa.beauty",
-            to: "batoul@test0.hadizproductions.com",
+            to: "info@gkpdc.com",
             subject: "New message from your website customer",
             text: "Name: " + firstname + " " + lastname + "\nEmail:" + email + "\nPhone:" + phone + "\n" + message,
         })

@@ -1,6 +1,49 @@
 "use client";
 
+import { useState, useEffect } from "react";
+import { useLanguage } from "../app/context/LanguageContext"; // ✅ Import context
+
 export default function Home() {
+  const { language } = useLanguage(); // ✅ Current language
+  const [translatedContent, setTranslatedContent] = useState({
+    visionTitle: "Vision",
+    visionText:
+      "To be the trusted leader in the construction and contracting industry, recognized for our ability to transform ideas into reality and for our dedication to shaping a better future.",
+  });
+
+  // ✅ Handle translation
+  useEffect(() => {
+    const translateContent = async () => {
+      const contentToTranslate = {
+        visionTitle: "Vision",
+        visionText:
+          "To be the trusted leader in the construction and contracting industry, recognized for our ability to transform ideas into reality and for our dedication to shaping a better future.",
+      };
+
+      try {
+        const translated = await Promise.all(
+          Object.entries(contentToTranslate).map(async ([key, text]) => {
+            const res = await fetch("/api/translate", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ targetLanguage: language, text }),
+            });
+
+            const data = await res.json();
+            return [key, data.translatedText || text];
+          })
+        );
+
+        setTranslatedContent(Object.fromEntries(translated));
+      } catch (err) {
+        console.error("Translation failed", err);
+        setTranslatedContent(contentToTranslate); // fallback
+      }
+    };
+
+    translateContent();
+  }, [language]);
+
   return (
     <>
       <section
@@ -34,13 +77,13 @@ export default function Home() {
             }}
             className="content-text"
           >
-            <h1 className="mynewpara">Vision</h1>
-            <p className="mynewpara1 mb-5 mt-5">
-              To be the trusted leader in the construction and
-              contracting industry, recognized for our ability to
-              transform ideas into reality and for our dedication
-              to shaping a better future.
-            </p> 
+            <h1 className="mynewpara">{translatedContent.visionTitle}</h1>
+            <p
+              className="mynewpara1 mb-5 mt-5"
+              dir={language === "ar" ? "rtl" : "ltr"}
+            >
+              {translatedContent.visionText}
+            </p>
           </div>
 
           {/* Image Column (RIGHT) */}
@@ -56,8 +99,8 @@ export default function Home() {
             <div
               style={{
                 backgroundImage:
-                  "url('https://res.cloudinary.com/dnprilij7/image/upload/v1756635753/b4c77e_0dd8413723734181869393a9a3a2bf4f_mv2_zesfer.avif')",
-                backgroundAttachment: "fixed",
+                  "url('https://res.cloudinary.com/dnprilij7/image/upload/v1758633346/47641932912_223573bfe4_c_obe1gl.jpg')",
+                backgroundAttachment: "inherit",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
                 backgroundSize: "cover",

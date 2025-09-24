@@ -1,14 +1,20 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useLanguage } from "../context/LanguageContext"; // ✅ import language context
 
 export default function Home() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const searchId = searchParams.get('id');
+  const searchId = searchParams.get("id");
 
+  const { language } = useLanguage(); // ✅ get current language
   const [blog, setBlog] = useState(null);
+  const [translatedContent, setTranslatedContent] = useState({
+    title: "",
+    description: "",
+  });
 
   useEffect(() => {
     if (!searchId) return;
@@ -18,18 +24,64 @@ export default function Home() {
         const res = await fetch(`/api/blogs/${searchId}`);
         const data = await res.json();
         if (data && data.length > 0) {
-          setBlog(data[0]); // take first result
+          setBlog(data[0]); // ✅ store original blog
         }
       } catch (error) {
-        console.error('Failed to fetch blog:', error);
+        console.error("Failed to fetch blog:", error);
       }
     };
 
     fetchBlog();
   }, [searchId]);
 
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const day = date.getDate();
+  const month = date.toLocaleString(language, { month: "short" }); // translated month
+  const year = date.getFullYear();
+  return `${day}/${month}/${year}`; // force day/month/year order
+};
+
+
+
+  // ✅ translation effect
+  useEffect(() => {
+    if (!blog) return;
+
+    const translateContent = async () => {
+      const contentToTranslate = {
+        title: blog.title,
+        description: blog.description,
+      };
+
+      try {
+        const translated = await Promise.all(
+          Object.entries(contentToTranslate).map(async ([key, text]) => {
+            const res = await fetch("/api/translate", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ targetLanguage: language, text }),
+            });
+
+            const data = await res.json();
+            return [key, data.translatedText || text];
+          })
+        );
+
+        setTranslatedContent(Object.fromEntries(translated));
+      } catch (err) {
+        console.error("Translation failed", err);
+        setTranslatedContent(contentToTranslate); // fallback
+      }
+    };
+
+    translateContent();
+  }, [language, blog]);
+
   if (!blog) {
-    return <p style={{ textAlign: 'center', marginTop: '50px' }}>Loading...</p>;
+    return (
+      <p style={{ textAlign: "center", marginTop: "50px" }}>Loading...</p>
+    );
   }
 
   return (
@@ -70,7 +122,7 @@ export default function Home() {
             <div
               style={{
                 backgroundImage: `url(${blog.img[0]})`,
-                backgroundAttachment: "fixed",
+                backgroundAttachment: "inherit",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
                 backgroundSize: "cover",
@@ -88,12 +140,15 @@ export default function Home() {
             }}
             className="content-text"
           >
-            <h1 className="mynewpara">{blog.title}</h1>
+            <h1 className="mynewpara">{translatedContent.title}</h1>
             <p
               className="mynewpara1 mb-5 mt-5"
-              dangerouslySetInnerHTML={{ __html: blog.description }}
+              dir={language === "ar" ? "rtl" : "ltr"}
+              dangerouslySetInnerHTML={{
+                __html: translatedContent.description,
+              }}
             ></p>
-        
+              <p className="text-sm text-gray-500 mt-2" dir={language === "ar" ? "rtl" : "ltr"}>{formatDate(blog.date)}</p>
           </div>
         </div>
       </section>

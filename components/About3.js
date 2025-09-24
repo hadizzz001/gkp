@@ -1,8 +1,10 @@
 "use client";
 
+import { useState, useEffect } from "react";
+import { useLanguage } from "../app/context/LanguageContext"; // ✅ Import context
 import { ShieldCheck, Star, Lightbulb, Users, Heart } from "lucide-react";
 
-const values = [
+const initialValues = [
   {
     icon: ShieldCheck,
     title: "Integrity",
@@ -31,52 +33,99 @@ const values = [
 ];
 
 export default function ValuesPage() {
+  const { language } = useLanguage(); // ✅ Current language
+  const [translatedValues, setTranslatedValues] = useState(initialValues);
+  const [title, setTitle] = useState("Our Core Values");
+
+  // ✅ Handle translation
+  useEffect(() => {
+    const translateContent = async () => {
+      try {
+        // Translate section title
+        const resTitle = await fetch("/api/translate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ targetLanguage: language, text: "Our Core Values" }),
+        });
+        const titleData = await resTitle.json();
+        setTitle(titleData.translatedText || "Our Core Values");
+
+        // Translate each value
+        const translated = await Promise.all(
+          initialValues.map(async (item) => {
+            const resTitle = await fetch("/api/translate", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ targetLanguage: language, text: item.title }),
+            });
+            const resText = await fetch("/api/translate", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ targetLanguage: language, text: item.text }),
+            });
+
+            const dataTitle = await resTitle.json();
+            const dataText = await resText.json();
+
+            return {
+              ...item,
+              title: dataTitle.translatedText || item.title,
+              text: dataText.translatedText || item.text,
+            };
+          })
+        );
+
+        setTranslatedValues(translated);
+      } catch (err) {
+        console.error("Translation failed", err);
+        setTranslatedValues(initialValues); // fallback
+        setTitle("Our Core Values");
+      }
+    };
+
+    translateContent();
+  }, [language]);
+
   return (
-      <section
-        style={{
-          display: "flex",
-          width: "100%",
-          minHeight: "100vh",
-          alignItems: "center",
-          justifyContent: "center",
-          boxSizing: "border-box",
-          padding: "40px 20px", 
-          textAlign: "left", // center text
-        }}
-      >
-        <div
-          style={{
-            maxWidth: "900px",
-          }}
-        >
+    <section
+      style={{
+        display: "flex",
+        width: "100%",
+        minHeight: "100vh",
+        alignItems: "center",
+        justifyContent: "center",
+        boxSizing: "border-box",
+        padding: "40px 20px",
+        textAlign: "left",
+      }}
+    >
+      <div style={{ maxWidth: "900px" }}>
+        <h1 className="mynewpara mb-5" style={{ color: "#07ae60" }}>
+          {title}
+        </h1>
 
-      <h1
-        className="mynewpara mb-5"
-        style={{ color: "#07ae60" }}
-      >
-        Our Core Values
-      </h1>
-
-      <div className="flex flex-col gap-8 ">
-        {values.map((item, index) => {
-          const Icon = item.icon;
-          return (
-            <div key={index} className="flex items-start gap-4">
-              <Icon size={32} style={{ color: "#07ae60" }} />
-              <div>
-                <h2
-                  className="text-xl font-semibold mb-2"
-                  style={{ color: "#07ae60" }}
-                >
-                  {item.title}
-                </h2>
-                <p className="text-gray-700">{item.text}</p>
+        <div className="flex flex-col gap-8">
+          {translatedValues.map((item, index) => {
+            const Icon = item.icon;
+            return (
+              <div key={index} className="flex items-start gap-4">
+                <Icon size={32} style={{ color: "#07ae60" }} />
+                <div>
+                  <h2
+                    className="text-xl font-semibold mb-2"
+                    style={{ color: "#07ae60" }}
+                  >
+                    {item.title}
+                  </h2>
+                  <p className="text-gray-700" dir={language === "ar" ? "rtl" : "ltr"}>
+                    {item.text}
+                  </p>
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
-             </div>
-          </section>
+    </section>
   );
 }

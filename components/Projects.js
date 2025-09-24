@@ -1,9 +1,11 @@
 'use client';
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useLanguage } from "../app/context/LanguageContext";
 
 export default function Gallery() {
   const router = useRouter();
+  const { language } = useLanguage();
   const [images, setImages] = useState([]);
 
   useEffect(() => {
@@ -12,11 +14,32 @@ export default function Gallery() {
         const res = await fetch("/api/products");
         const data = await res.json();
 
-        // Take only the first 3 items
-        const galleryImages = data.slice(0, 3).map(item => ({
-          src: item.img[0], // get the first image
-          title: item.title,
-        }));
+        // Only take the first 6 items
+        const limitedData = data.slice(0, 6);
+
+        const galleryImages = await Promise.all(
+          limitedData.map(async (item) => {
+            // Translate the title
+            let translatedTitle = item.title;
+            try {
+              const translationRes = await fetch("/api/translate", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ targetLanguage: language, text: item.title }),
+              });
+              const translationData = await translationRes.json();
+              translatedTitle = translationData.translatedText || item.title;
+            } catch (err) {
+              console.error("Translation failed for title:", item.title, err);
+            }
+
+            return {
+              id: item._id,
+              src: item.img[0],
+              title: translatedTitle,
+            };
+          })
+        );
 
         setImages(galleryImages);
       } catch (error) {
@@ -25,46 +48,48 @@ export default function Gallery() {
     };
 
     fetchProducts();
-  }, []);
+  }, [language]);
 
   return (
-    <>
-      <div
-        className="mt-5"
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <h1 className="mynewpara mt-10">Our projects</h1>
+    <div className="container mx-auto px-4">
+      <div className="mt-5 flex justify-center items-center">
+        <h1 className="mynewpara mt-10">
+          {language === "ar" ? "مشاريعنا" : "Our projects"}
+        </h1>
       </div>
 
-      <section className="custom-gallery">
+      <section className="custom-gallery grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
         {images.map((img, index) => (
-          <div className="custom-gallery-item" key={index}>
-            <img src={img.src} alt={img.title} className="custom-gallery-img" />
-            <div className="custom-gallery-overlay" />
-            <p className="mynewpara4">{img.title}</p>
+          <div
+            className="relative overflow-hidden rounded-lg cursor-pointer group aspect-square"
+            key={index}
+            onClick={() => router.push(`/project?id=${img.id}`)}
+          >
+            <img
+              src={img.src}
+              alt={img.title}
+              className="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-110"
+            />
+            <div className="absolute inset-0 bg-black/15" />
+            <p
+              className="mynewpara4 absolute inset-0 flex items-center justify-center text-white text-lg font-semibold z-10"
+              dir={language === "ar" ? "rtl" : "ltr"}
+            >
+              {img.title}
+            </p>
           </div>
         ))}
       </section>
 
-      <div
-        className="mb-5 mt-5"
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <button
-          id="mybbtn2"
-          onClick={() => router.push("/projects")}
+              <div
+          className="mb-5 mt-5"
+          style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
         >
-          More projects
-        </button>
-      </div>
-    </>
+          <button id="mybbtn2" onClick={() => router.push("/projects")}>
+            More projects
+          </button>
+        </div>
+      
+    </div>
   );
 }
