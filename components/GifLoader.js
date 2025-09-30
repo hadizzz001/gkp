@@ -22,7 +22,7 @@ const SLoader = ({ onComplete }) => {
       <div className="relative w-48 h-48">
         {/* Logo */}
         <img
-          src="https://res.cloudinary.com/dnprilij7/image/upload/v1756377073/logo-removebg-preview_mctx7x.webp"
+          src="https://res.cloudinary.com/dnprilij7/image/upload/v1759233765/logo-removebg-preview_i445ay.png"
           alt="S Loader"
           className="w-full h-full object-contain"
         />

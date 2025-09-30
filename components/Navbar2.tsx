@@ -73,7 +73,7 @@ export default function NavBar() {
           <div className="absolute left-1/2 -translate-x-1/2 sm:static sm:translate-x-0 flex justify-center sm:justify-start items-center flex-1 sm:flex-none">
             <a href="/">
               <img
-                src="https://res.cloudinary.com/dnprilij7/image/upload/v1756377073/logo-removebg-preview_mctx7x.webp"
+                src="https://res.cloudinary.com/dnprilij7/image/upload/v1759233765/logo-removebg-preview_i445ay.png"
                 alt="Logo"
                 className="h-16"
                 style={{ maxHeight: '60px' }}

@@ -7,7 +7,7 @@ export default function Home() {
   const { language } = useLanguage(); // ✅ Current language
   const [translatedContent, setTranslatedContent] = useState({
     partnershipTitle: "THE POWER OF PARTNERSHIP",
-    partnershipText: `GKP Development Consultancy has entered into a strategic joint venture with ITC
+    partnershipText: `GKP Development & Contracting has entered into a strategic joint venture with ITC
 Interiors, bringing together regional construction and fit-out expertise with global
 interior contracting excellence. This partnership combines GKP's strong regional
 presence, multidisciplinary construction capabilities, and deep understanding of local
@@ -82,7 +82,7 @@ shaping a better built environment.`,
       >
         <div style={{ maxWidth: "900px" }}>
           <img
-            src="https://res.cloudinary.com/dnprilij7/image/upload/v1758730201/part_l3qmgs.webp"
+            src="https://res.cloudinary.com/dnprilij7/image/upload/v1759233934/grp_nrzpbf.jpg"
             alt="Logo"
             style={{
               width: "550px",
