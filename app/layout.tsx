@@ -45,7 +45,7 @@ export default function RootLayout({
     content="At  GKP, we're reshaping the way businesses connect."
     name="description" 
   />
-  <meta content="GKP" name="keywords" property=" GKP,  construction solutions, residential construction, commercial construction, industrial projects, timely delivery, cost efficiency, exceptional quality, fit-out services, interior design, functional interiors, aesthetic interiors, customized interiors, creative design, practical design, space transformation, contracting services, infrastructure development, procurement to execution, deadline-focused construction, budget-friendly, Lebanon, KSA, UAE, Kuwait, Arab, Golf, projects" />
+  <meta content="GKP" name="keywords" property=" GKP, construction solutions, residential construction, commercial construction, industrial projects, timely delivery, cost efficiency, exceptional quality, fit-out services, interior design, functional interiors, aesthetic interiors, customized interiors, creative design, practical design, space transformation, contracting services, infrastructure development, procurement to execution, deadline-focused construction, budget-friendly, Lebanon, KSA, UAE, Kuwait, Arab, Golf, projects" />
   <meta
     content="GKP"
     name=""
@@ -63,23 +63,23 @@ export default function RootLayout({
     property="og:description"
   />
   <meta
-    content="https://res.cloudinary.com/dnprilij7/image/upload/v1759233765/logo-removebg-preview_i445ay.png"
+    content="https://res.cloudinary.com/dnprilij7/image/upload/v1759233765/logo-removebg-preview_i445ay.png?v=2"
     name=""
     property="og:image"
   />
    
   <link
-    href="https://res.cloudinary.com/dnprilij7/image/upload/v1759233765/logo-removebg-preview_i445ay.png"
+    href="https://res.cloudinary.com/dnprilij7/image/upload/v1759233765/logo-removebg-preview_i445ay.png?v=2"
     rel="apple-touch-icon"
     sizes="180x180"
   />
   <link
-    href="https://res.cloudinary.com/dnprilij7/image/upload/v1759233765/logo-removebg-preview_i445ay.png"
+    href="https://res.cloudinary.com/dnprilij7/image/upload/v1759233765/logo-removebg-preview_i445ay.png?v=2"
     rel="icon"
     sizes="32x32" 
   />
   <link
-    href="https://res.cloudinary.com/dnprilij7/image/upload/v1759233765/logo-removebg-preview_i445ay.png"
+    href="https://res.cloudinary.com/dnprilij7/image/upload/v1759233765/logo-removebg-preview_i445ay.png?v=2"
     rel="icon"
     sizes="16x16" 
   /> 
