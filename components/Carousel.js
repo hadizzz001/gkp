@@ -2,11 +2,11 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useLanguage } from "../app/context/LanguageContext"; // import language context
+import { useLanguage } from "../app/context/LanguageContext";
 
 const MyCarousel = () => {
   const router = useRouter();
-  const { language } = useLanguage(); // get current language
+  const { language } = useLanguage();
 
   const [translatedContent, setTranslatedContent] = useState({
     title: "Ingenuity, exactness, superior standards",
@@ -37,7 +37,7 @@ const MyCarousel = () => {
         setTranslatedContent(Object.fromEntries(translated));
       } catch (err) {
         console.error("Translation failed", err);
-        setTranslatedContent(contentToTranslate); // fallback
+        setTranslatedContent(contentToTranslate);
       }
     };
 
@@ -45,13 +45,16 @@ const MyCarousel = () => {
   }, [language]);
 
   return (
-    <div
-      className="relative w-full bg-fixed bg-no-repeat bg-center bg-cover min-h-[800px] md:min-h-[800px]"
-      style={{
-        backgroundImage:
-          "url('https://res.cloudinary.com/dnprilij7/image/upload/v1758632386/closeup-of-a-modern-building-with-a-cloudless-sky-2023-11-27-05-10-17-utc-1920x1080_upqmxt.webp')",
-      }}
-    >
+    <div className="relative w-full min-h-[800px] md:min-h-[800px] overflow-hidden">
+
+      {/* ✅ Image Tag Instead of Background */}
+<img
+  src="https://res.cloudinary.com/dnprilij7/image/upload/v1759230918/b012fbd65867cbf7c10ec152eba32ac5_zsbvyc.jpg"
+  alt="Carousel Background"
+  className="absolute inset-0 w-full h-full object-cover object-[40%_center] md:object-center"
+/>
+
+
       {/* Black Overlay */}
       <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center">
         <div className="text-left ml-6 md:ml-20">
