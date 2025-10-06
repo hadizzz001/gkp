@@ -9,14 +9,14 @@ const MyCarousel = () => {
   const { language } = useLanguage();
 
   const [translatedContent, setTranslatedContent] = useState({
-    title: "Ingenuity, exactness, superior standards",
+    title: "Building Your Vision into Reality",
     learnMore: "Learn more",
   });
 
   useEffect(() => {
     const translateContent = async () => {
       const contentToTranslate = {
-        title: "Ingenuity, exactness, superior standards",
+        title: "Building Your Vision into Reality",
         learnMore: "View more",
       };
 
