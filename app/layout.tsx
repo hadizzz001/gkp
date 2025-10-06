@@ -136,7 +136,7 @@ export default function RootLayout({
         <BooleanProvider>
         <CartProvider>
           <Navbar2 />
-          <WhatsAppIcon />
+          {/* <WhatsAppIcon /> */}
           {/* <GoogleAnalytics gaId="" /> */}
            
           {children} 
