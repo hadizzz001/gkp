@@ -71,9 +71,9 @@ const ProjectsList = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {translatedProjects.map((project, index) => (
-          <div key={index} className="p-4 bg-[#07ae60]">
+          <div key={index} className="p-4 bg-[#ccc]">
             <p
-              className="font-bold text-lg text-white uppercase"
+              className="font-bold text-lg text-black uppercase"
               dir={language === "ar" ? "rtl" : "ltr"}
             >
               {project}
