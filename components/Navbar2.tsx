@@ -9,6 +9,7 @@ const originalLabels = {
   home: "Home Page",
   about: "About Us",
   projects: "Projects",
+  moreProjects: "More Projects", // ✅ added here
   services: "Services",
   blogs: "Blogs",
   contact: "Contact Us",
@@ -89,6 +90,7 @@ export default function NavBar() {
             <a href="/">{labels.home}</a>
             <a href="/about">{labels.about}</a>
             <a href="/projects">{labels.projects}</a>
+            <a href="/more-projects">{labels.moreProjects}</a> {/* ✅ added */}
             <a href="/services">{labels.services}</a>
             <a href="/blogs">{labels.blogs}</a>
             <a href="/contact">{labels.contact}</a>
@@ -110,8 +112,9 @@ export default function NavBar() {
             <nav className="flex flex-col mt-16 space-y-6 px-6 text-lg">
               <a href="/" onClick={() => setMenuOpen(false)}>{labels.home}</a>
               <a href="/about" onClick={() => setMenuOpen(false)}>{labels.about}</a>
-              <a href="/services" onClick={() => setMenuOpen(false)}>{labels.services}</a>
               <a href="/projects" onClick={() => setMenuOpen(false)}>{labels.projects}</a>
+              <a href="/more-projects" onClick={() => setMenuOpen(false)}>{labels.moreProjects}</a> {/* ✅ added */}
+              <a href="/services" onClick={() => setMenuOpen(false)}>{labels.services}</a>
               <a href="/blogs" onClick={() => setMenuOpen(false)}>{labels.blogs}</a>
               <a href="/contact" onClick={() => setMenuOpen(false)}>{labels.contact}</a>
               {/* Language Selector in mobile */}
