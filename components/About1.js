@@ -99,7 +99,7 @@ export default function Home() {
             <div
               style={{
                 backgroundImage:
-                  "url('https://res.cloudinary.com/dnprilij7/image/upload/v1758633346/47641932912_223573bfe4_c_obe1gl.jpg')",
+                  "url('https://res.cloudinary.com/dnprilij7/image/upload/v1759753157/bd3253d2e549bcab5733f99e73b2d0ae_fhmemq.jpg')",
                 backgroundAttachment: "inherit",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
