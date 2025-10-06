@@ -192,45 +192,66 @@ export default function Home() {
           </form>
 
           {/* Contact Icons with Text */}
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <div className="mynewpara1 d-flex flex-column gap-3 mt-4 mb-20"  >
-              <a
-                href="mailto:info@gkpdc.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="d-flex align-items-center"
-                style={{ color: "#444", textDecoration: "none", gap: "8px" }}
-              >
-                <Mail size={28} strokeWidth={2} /> info@gkpdc.com
-              </a>
+<div
+  style={{
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  }}
+>
+  <div className="mynewpara1 d-flex flex-column gap-3 mt-4 mb-20">
+    <a
+      href="mailto:info@gkpdc.com"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="d-flex align-items-center"
+      style={{ color: "#444", textDecoration: "none", gap: "8px" }}
+    >
+      <Mail size={28} strokeWidth={2} /> info@gkpdc.com
+    </a>
 
-              <a
-                href="https://wa.me/966556500026"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="d-flex align-items-center"
-                style={{ color: "#444", textDecoration: "none", gap: "8px" }}
-              >
-                <MessageSquare size={28} strokeWidth={2} /> +966 55 6500026
-              </a>
+    <a
+      href="https://wa.me/966556500026"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="d-flex align-items-center"
+      style={{ color: "#444", textDecoration: "none", gap: "8px" }}
+    >
+      <MessageSquare size={28} strokeWidth={2} /> Saudi Arabia: +966 55 6500026
+    </a>
 
-              <a
-                href="https://wa.me/971544415692"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="d-flex align-items-center"
-                style={{ color: "#444", textDecoration: "none", gap: "8px" }}
-              >
-                <MessageSquare size={28} strokeWidth={2} /> +971 54 4415692
-              </a>
-            </div>
-          </div>
+    <a
+      href="https://wa.me/966540230404"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="d-flex align-items-center"
+      style={{ color: "#444", textDecoration: "none", gap: "8px" }}
+    >
+      <MessageSquare size={28} strokeWidth={2} /> Saudi Arabia: +966 54 0230404
+    </a>
+
+    <a
+      href="https://wa.me/971507413282"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="d-flex align-items-center"
+      style={{ color: "#444", textDecoration: "none", gap: "8px" }}
+    >
+      <MessageSquare size={28} strokeWidth={2} /> Dubai: +971 50 7413282
+    </a>
+
+    <a
+      href="https://wa.me/971544415692"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="d-flex align-items-center"
+      style={{ color: "#444", textDecoration: "none", gap: "8px" }}
+    >
+      <MessageSquare size={28} strokeWidth={2} /> Dubai: +971 54 4415692
+    </a>
+  </div>
+</div>
+
         </div>
       </div>
     </>
