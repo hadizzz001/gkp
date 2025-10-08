@@ -67,7 +67,7 @@ const MyCarousel = () => {
       />
 
       {/* ✅ Black overlay with 10% opacity */}
-      <div className="absolute inset-0 bg-black bg-opacity-25"></div>
+      <div className="absolute inset-0 bg-black bg-opacity-35"></div>
 
       {/* ✅ Text vertically & horizontally centered */}
       <div className="absolute left-6 md:left-20 top-1/2 -translate-y-1/2 text-left z-10">
