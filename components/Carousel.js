@@ -54,13 +54,13 @@ const MyCarousel = () => {
   }, [language]);
 
   return (
-    <div className="relative w-full h-[900px] overflow-hidden flex items-center justify-center">
+    <div className="relative w-full h-[800px] overflow-hidden flex items-center justify-center">
       {/* ✅ Background image fills screen */}
       <img
         src={
           isMobile
             ? "https://res.cloudinary.com/dnprilij7/image/upload/v1759230918/b012fbd65867cbf7c10ec152eba32ac5_zsbvyc.jpg"
-            : "https://res.cloudinary.com/dnprilij7/image/upload/v1759920011/eee_xstmvm.webp"
+            : "https://res.cloudinary.com/dnprilij7/image/upload/v1760005059/building_e2ucjg.webp"
         }
         alt="Carousel Background"
         className="absolute inset-0 w-full h-full object-cover"
