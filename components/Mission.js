@@ -7,7 +7,7 @@ export default function Home() {
   const { language } = useLanguage(); // ✅ Get current language
   const [isMobile, setIsMobile] = useState(false);
   const [translatedContent, setTranslatedContent] = useState({
-    missionTitle: "Mission",
+    missionTitle: "Our Mission",
     missionText:
       "To deliver world class construction that exceeds client expectations through innovation, precision, and quality.",
   });
@@ -16,7 +16,7 @@ export default function Home() {
   useEffect(() => {
     const translateContent = async () => {
       const contentToTranslate = {
-        missionTitle: "Mission",
+        missionTitle: "Our Mission",
         missionText:
           "To deliver world class construction that exceeds client expectations through innovation, precision, and quality.",
       };

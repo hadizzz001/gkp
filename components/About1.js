@@ -6,7 +6,7 @@ import { useLanguage } from "../app/context/LanguageContext"; // ✅ Import cont
 export default function Home() {
   const { language } = useLanguage(); // ✅ Current language
   const [translatedContent, setTranslatedContent] = useState({
-    visionTitle: "Vision",
+    visionTitle: "Our Vision",
     visionText:
       "To be the trusted leader in the construction and contracting industry, recognized for our ability to transform ideas into reality and for our dedication to shaping a better future.",
   });
@@ -15,7 +15,7 @@ export default function Home() {
   useEffect(() => {
     const translateContent = async () => {
       const contentToTranslate = {
-        visionTitle: "Vision",
+        visionTitle: "Our Vision",
         visionText:
           "To be the trusted leader in the construction and contracting industry, recognized for our ability to transform ideas into reality and for our dedication to shaping a better future.",
       };
