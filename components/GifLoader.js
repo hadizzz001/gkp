@@ -1,6 +1,5 @@
-"use client";
+'use client';
 
-import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 
 const SLoader = ({ onComplete }) => {
@@ -19,20 +18,20 @@ const SLoader = ({ onComplete }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-white z-[9999]">
-      <div className="relative w-48 h-48">
-        {/* Logo */}
+      <div className="relative w-[20rem] h-[20rem] flex items-center justify-center">
+        {/* Spot shadow behind the logo */}
+        <div
+          className="absolute w-[26rem] h-[26rem] rounded-full"
+          style={{
+            background: 'radial-gradient(circle, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 70%)',
+          }}
+        />
+
+        {/* Logo on top */}
         <img
           src="https://res.cloudinary.com/dnprilij7/image/upload/v1759233765/logo-removebg-preview_i445ay.png"
           alt="S Loader"
-          className="w-full h-full object-contain"
-        />
-
-        {/* White overlay that slides away */}
-        <motion.div
-          initial={{ x: 0 }}
-          animate={{ x: "100%" }}
-          transition={{ duration: 2, ease: "easeInOut" }}
-          className="absolute top-0 left-0 w-full h-full bg-white"
+          className="w-[32rem] h-[32rem] object-contain relative z-10"
         />
       </div>
     </div>

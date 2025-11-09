@@ -233,13 +233,13 @@ export default function Home() {
     </a>
 
     <a
-      href="https://wa.me/971544415692"
+      href="https://wa.me/966556500026"
       target="_blank"
       rel="noopener noreferrer"
       className="d-flex align-items-center"
       style={{ color: "#444", textDecoration: "none", gap: "8px" }}
     >
-      <MessageSquare size={28} strokeWidth={2} /> Dubai: +971 54 4415692
+      <MessageSquare size={28} strokeWidth={2} /> Saudi Arabia: +966 55 6500026
     </a>
   </div>
 </div>
