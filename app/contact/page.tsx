@@ -222,6 +222,16 @@ export default function Home() {
       <MessageSquare size={28} strokeWidth={2} /> Saudi Arabia: +966 54 0230404
     </a>
 
+        <a
+      href="https://wa.me/966556500026"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="d-flex align-items-center"
+      style={{ color: "#444", textDecoration: "none", gap: "8px" }}
+    >
+      <MessageSquare size={28} strokeWidth={2} /> Saudi Arabia: +966 55 6500026
+    </a>
+
     <a
       href="https://wa.me/971507413282"
       target="_blank"
@@ -232,15 +242,7 @@ export default function Home() {
       <MessageSquare size={28} strokeWidth={2} /> Dubai: +971 50 7413282
     </a>
 
-    <a
-      href="https://wa.me/966556500026"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="d-flex align-items-center"
-      style={{ color: "#444", textDecoration: "none", gap: "8px" }}
-    >
-      <MessageSquare size={28} strokeWidth={2} /> Saudi Arabia: +966 55 6500026
-    </a>
+
   </div>
 </div>
 

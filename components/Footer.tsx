@@ -135,12 +135,13 @@ const Footer = () => {
                     <a href="https://wa.me/966540230404" target="_blank" rel="noopener noreferrer" className="text-[#666] hover:text-black text-2xl">
                         <FaWhatsapp />
                     </a>
+                                        <a href="https://wa.me/966556500026" target="_blank" rel="noopener noreferrer" className="text-[#666] hover:text-black text-2xl">
+                        <FaWhatsapp />
+                    </a>
                     <a href="https://wa.me/971507413282" target="_blank" rel="noopener noreferrer" className="text-[#666] hover:text-black text-2xl">
                         <FaWhatsapp />
                     </a>
-                    <a href="https://wa.me/966556500026" target="_blank" rel="noopener noreferrer" className="text-[#666] hover:text-black text-2xl">
-                        <FaWhatsapp />
-                    </a>
+
                     <a href="mailto:info@gkpdc.com" target="_blank" rel="noopener noreferrer" className="text-[#666] hover:text-black text-2xl">
                         <Mail />
                     </a>
@@ -177,10 +178,13 @@ const Footer = () => {
 
                 {/* Social Icons */}
                 <div className="flex justify-center gap-6 mt-4">
-                    <a href="https://wa.me/966556500026" target="_blank" rel="noopener noreferrer" className="text-[#666] hover:text-black text-2xl">
+                    <a href="https://wa.me/966540230404" target="_blank" rel="noopener noreferrer" className="text-[#666] hover:text-black text-2xl">
                         <FaWhatsapp />
                     </a>
-                    <a href="https://wa.me/966556500026" target="_blank" rel="noopener noreferrer" className="text-[#666] hover:text-black text-2xl">
+                                        <a href="https://wa.me/966556500026" target="_blank" rel="noopener noreferrer" className="text-[#666] hover:text-black text-2xl">
+                        <FaWhatsapp />
+                    </a>
+                    <a href="https://wa.me/971507413282" target="_blank" rel="noopener noreferrer" className="text-[#666] hover:text-black text-2xl">
                         <FaWhatsapp />
                     </a>
                     <a href="mailto:info@gkpdc.com" target="_blank" rel="noopener noreferrer" className="text-[#666] hover:text-black text-2xl">
